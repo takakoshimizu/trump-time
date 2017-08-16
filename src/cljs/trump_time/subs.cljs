@@ -7,12 +7,12 @@
 (re-frame/reg-sub
   :from
   (fn [db]
-    (second ((:from db) tt/scales))))
+    (:from db)))
 
 (re-frame/reg-sub
   :to
   (fn [db]
-    (second ((:to db) tt/scales))))
+    (:to db)))
 
 (re-frame/reg-sub
   :days
