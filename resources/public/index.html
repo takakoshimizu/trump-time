@@ -1,31 +1,58 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset='utf-8'>
-    <title>Trump Time</title>
-    
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
-    <link href="css/web.css" rel="stylesheet" type="text/css">
-    <link href="data:image/x-icon;base64,AAABAAEAEBAAAAAAAABoBQAAFgAAACgAAAAQAAAAIAAAAAEACAAAAAAAAAEAAAAAAAAAAAAAAAEAAAAAAAAAAAAARVKLAG6F0QA+KyoALBseAAwXMwBJLy8AIzZXADUfIwDr3d0ALR4eADYiIwBYfqQAYXLOAAcQvABddsMANSAhACwbHwA2JikARFCSAGh3hgBSaZ4AMR4fADlQegDw5NsAMCAiADEgIgDezcoAVmmvAIyd4QB4i+MAhZTiAPfs5gD07+YAS2KSADMeIAAZMWgAfZXgAAYPIwAwICMAd47TAHSJ2QBxhtEAS1dvAC0cHgA1ICMAcYXUAG+GyQBEWaQAa4zJAMyxpwClj4QAipexAGyN1wBfc84AJjhdAB4xUAATNGEARkqVAExXcAAjFRIALRwfAAsf8AA2JCEAHDdpAImX7ABfeLAAOCMkAPXv6AA/KikAKxodAMewowBrgdkA8+TeAAgNGgA7JScA4s7KAAsRMADq29cAhWhgAFV/pgDt5N8AVnDAAOTMyAAzISMA5dbNAO/n3wA2ISMAWnHOAKCt8QCHoOUALyAeAKOs9AAxHyEAOU9xAMjG2wDm2tMANlB/AOXTzgAXNGwANiIhAE0xMADx5uMAFSZaAOrb2QDcxLcALESBAHhVVgBYWpQAPSMnAE5hogBbebkANiIiACtBcQCFmt8ALh0gADYhJQBdebEAYHemADAgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFhYEc0RfDg4gV3QICj0AABYWET0gUQ4OIVRwCyxdAAAWFj1GVhg+Dk48QydbGgAAFhYWLEkyDg5oMz8SZBkAABYWI3dmYA4OYkcQRS1tAAAAFhZLT0wJDmkbAwZlAAAAAAAWFhZTbDpuVWsAAAAAAAAAAAAAEx5BKBwAAAAAAAAAAAAAAAIpNAFSAAAAAAAAAAAAABQPSA02WG8AAAAAAAAAAAAqcllcHx0iAAAAAAAAAAAAZ3UvLjBCFQAAAAAAAAAAAAVqWiU1MXYAAAAAAAAAAAAmTSRjcUA5AAAAAAAAAAAAJEo4N2EXUAAAAAAAAAAAAAA7B14rDAAAAAAAAAADAAAAAwAAAAMAAAADAAAAAwAAgAcAAMAfAAD4PwAA+D8AAPAfAADwHwAA8B8AAPAfAADwHwAA8B8AAPg/AAA=" rel="icon" type="image/x-icon" />
-  </head>
-  <body>
-    <div class="container mt-3">
-      <header class="jumbotron">
-        <h1 class="display-3">Trump Time</h1>
-        <p class="lead">Convert between various units of Trump time measurement and real-world time.</p>
-      </header>
-      <section id="app"></section>
+
+<head>
+  <meta charset='utf-8'>
+  <title>Trump Time</title>
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ"
+    crossorigin="anonymous">
+  <link href="css/web.css" rel="stylesheet" type="text/css">
+  <link href="data:image/x-icon;base64,AAABAAEAEBAAAAAAAABoBQAAFgAAACgAAAAQAAAAIAAAAAEACAAAAAAAAAEAAAAAAAAAAAAAAAEAAAAAAAAAAAAARVKLAG6F0QA+KyoALBseAAwXMwBJLy8AIzZXADUfIwDr3d0ALR4eADYiIwBYfqQAYXLOAAcQvABddsMANSAhACwbHwA2JikARFCSAGh3hgBSaZ4AMR4fADlQegDw5NsAMCAiADEgIgDezcoAVmmvAIyd4QB4i+MAhZTiAPfs5gD07+YAS2KSADMeIAAZMWgAfZXgAAYPIwAwICMAd47TAHSJ2QBxhtEAS1dvAC0cHgA1ICMAcYXUAG+GyQBEWaQAa4zJAMyxpwClj4QAipexAGyN1wBfc84AJjhdAB4xUAATNGEARkqVAExXcAAjFRIALRwfAAsf8AA2JCEAHDdpAImX7ABfeLAAOCMkAPXv6AA/KikAKxodAMewowBrgdkA8+TeAAgNGgA7JScA4s7KAAsRMADq29cAhWhgAFV/pgDt5N8AVnDAAOTMyAAzISMA5dbNAO/n3wA2ISMAWnHOAKCt8QCHoOUALyAeAKOs9AAxHyEAOU9xAMjG2wDm2tMANlB/AOXTzgAXNGwANiIhAE0xMADx5uMAFSZaAOrb2QDcxLcALESBAHhVVgBYWpQAPSMnAE5hogBbebkANiIiACtBcQCFmt8ALh0gADYhJQBdebEAYHemADAgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFhYEc0RfDg4gV3QICj0AABYWET0gUQ4OIVRwCyxdAAAWFj1GVhg+Dk48QydbGgAAFhYWLEkyDg5oMz8SZBkAABYWI3dmYA4OYkcQRS1tAAAAFhZLT0wJDmkbAwZlAAAAAAAWFhZTbDpuVWsAAAAAAAAAAAAAEx5BKBwAAAAAAAAAAAAAAAIpNAFSAAAAAAAAAAAAABQPSA02WG8AAAAAAAAAAAAqcllcHx0iAAAAAAAAAAAAZ3UvLjBCFQAAAAAAAAAAAAVqWiU1MXYAAAAAAAAAAAAmTSRjcUA5AAAAAAAAAAAAJEo4N2EXUAAAAAAAAAAAAAA7B14rDAAAAAAAAAADAAAAAwAAAAMAAAADAAAAAwAAgAcAAMAfAAD4PwAA+D8AAPAfAADwHwAA8B8AAPAfAADwHwAA8B8AAPg/AAA="
+    rel="icon" type="image/x-icon" />
+  <style type="text/css">
+    /* Sticky footer styles -------------------------------------------------- */
+
+    html {
+      position: relative;
+      min-height: 100%;
+    }
+
+    body {
+      /* Margin bottom by footer height */
+      margin-bottom: 60px;
+    }
+
+    .footer {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      /* Set the fixed height of the footer here */
+      height: 60px;
+      line-height: 60px;
+      /* Vertically center the text there */
+      background-color: #f5f5f5;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container mt-3">
+    <header class="jumbotron">
+      <h1 class="display-3">Trump Time</h1>
+      <p class="lead">Convert between various units of Trump time measurement and real-world time.</p>
+    </header>
+    <section id="app"></section>
+  </div>
+  <footer class="footer">
+    <div class="container">
+      <span class="text-muted">Project made possible by <a href="http://twitter.com/davidbates">dlbates.com</a> && <a href="https://github.com/takakoshimizu/trump-time">takakoshimizu</a></span>
     </div>
-    <div class="jumbotron">
-        <div class="container">
-          <h1 class="display-3">Fluid jumbotron</h1>
-          <p class="lead">This is a modified jumbotron that occupies the entire horizontal space of its parent.</p>
-        </div>
-      </div>
-    <div id="footer">
-      Project made possible by <a href="http://dlbates.com">dlbates.com</a> && <a href="https://github.com/takakoshimizu/trump-time">takakoshimizu</a>
-    </div>
-    <script src="js/compiled/app.js"></script>
-    <script>trump_time.core.init();</script>
-  </body>
+  </footer>
+  <script src="js/compiled/app.js"></script>
+  <script>
+    trump_time.core.init();
+  </script>
+</body>
+
 </html>
