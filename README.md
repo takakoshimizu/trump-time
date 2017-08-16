@@ -1,6 +1,8 @@
 # trump-time
 
-A [re-frame](https://github.com/Day8/re-frame) application designed to ... well, that part is up to you.
+A [re-frame](https://github.com/Day8/re-frame) application designed to ... convert Trump times.
+
+Seriously though, I was just trying to make something stupid to get re-frame running making something. I wasn't trying to shoot for great, idiomatic code. Now that I can make things work, I can work on making things right.
 
 ## Development Mode
 
