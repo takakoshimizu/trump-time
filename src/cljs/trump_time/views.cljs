@@ -21,7 +21,7 @@
 
 (defn select-item 
   [option]
-  [:option {:key option :value (first option)} 
+  [:option {:key (first option) :value (first option)} 
     ((comp inflect/plural inflect/capitalize name) (second option))])
 
 
@@ -33,7 +33,8 @@
     (map select-item options)])
 
 
-(defn app 
+(defn app
+  "HUGE METHOD WOO"
   []
   (let [from      (re-frame/subscribe [:from])
         to        (re-frame/subscribe [:to])
@@ -54,11 +55,11 @@
           [:div {:class "col-md-5"}
             [:div {:class "jumbotron text-center"}
               [:h1 @days]
-              [:p {:class "lead"} ((if (= 1 @days) inflect/singular inflect/plural) @from)]]]
+              [:p {:class "lead"} ((if (= 1 @days) inflect/singular inflect/plural) (second (@from tt/scales)))]]]
           [:div {:class "col-md-2 align-self-center text-center"}
             [:h1 "="]]
           [:div {:class "col-md-5"}
             [:div {:class "jumbotron text-center"}
               [:h1 @converted]
-              [:p {:class "lead"} ((if (= 1 @converted) inflect/singular inflect/plural) @to)]]]]])))
+              [:p {:class "lead"} ((if (= 1 @converted) inflect/singular inflect/plural) (second (@to tt/scales)))]]]]])))
 
