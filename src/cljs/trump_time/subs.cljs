@@ -5,19 +5,14 @@
             [cljs.pprint :as pprint]))
 
 (re-frame/reg-sub
- :name
- (fn [db]
-   (:name db)))
-
-(re-frame/reg-sub
   :from
   (fn [db]
-    (:from db)))
+    (second ((:from db) tt/scales))))
 
 (re-frame/reg-sub
   :to
   (fn [db]
-    (:to db)))
+    (second ((:to db) tt/scales))))
 
 (re-frame/reg-sub
   :days
