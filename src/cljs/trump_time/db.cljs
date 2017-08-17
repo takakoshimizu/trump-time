@@ -1,6 +1,6 @@
 (ns trump-time.db)
 
 (def default-db
-  {:from :day 
+  {:from :spicer 
    :to   :mooch 
-   :days 20})
+   :days 1})

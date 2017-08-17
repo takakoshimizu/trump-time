@@ -62,8 +62,8 @@
     [:div.row.mt-3.mb-5
       [:div.col-md-5.text-center
         [type-select
-          {:sub   :from} 
-          :event :set-from]]
+          {:sub   :from 
+           :event :set-from}]]
       [:div.col-md-2.align-self-center.text-center "to"]
       [:div.col-md-5.text-center
         [type-select
