@@ -1,6 +1,6 @@
 (ns trump-time.views
   (:require [re-frame.core :as re-frame]
-            [trump-time.utils :as tt]
+            [trump-time.utils :as u]
             [inflections.core :as inflect]))
 
 
@@ -11,55 +11,81 @@
 
 
 (defn day-box 
-  [def-val]
-  [:form
-    [:input {:type "text"
-             :class "form-control"
-             :on-change (dispatch-value :set-days) 
-             :default-value def-val}]])
+  []
+  (let [value (deref (re-frame/subscribe [:days]))]
+    [:input.form-control 
+      {:type "text"
+       :default-value value
+       :on-change (dispatch-value :set-days)}])) 
 
 
 (defn select-item 
   [option]
-  [:option {:key (first option) :value (first option)} 
-    ((comp inflect/plural inflect/capitalize name) (second option))])
+  [:option {:key (first option) 
+            :value (first option)} 
+    (-> option second inflect/capitalize inflect/plural)])
 
 
 (defn select-box 
-  [options v event]
-  [:select {:class "form-control"
-            :on-change (dispatch-value event)
-            :value v}
+  [{:keys [options value event]}]
+  [:select.form-control 
+    {:value value
+     :on-change (dispatch-value event)}
     (map select-item options)])
 
 
-(defn app
-  "HUGE METHOD WOO"
-  []
-  (let [from      (re-frame/subscribe [:from])
-        to        (re-frame/subscribe [:to])
-        days      (re-frame/subscribe [:days])
-        converted (re-frame/subscribe [:converted])]
-    (fn []
-      [:div {:class "container-fluid"}
-        [:div {:class "row"}
-          [:div {:class "col-12"}
-            (day-box @days)]]
-        [:div {:class "row mt-3 mb-5"}
-          [:div {:class "col-md-5 text-center"}
-            (select-box (tt/keys-and-names tt/scales) @from :set-from)]
-          [:div {:class "col-md-2 align-self-center text-center"} "to"]
-          [:div {:class "col-md-5 text-center"} 
-            (select-box (tt/keys-and-names tt/scales) @to :set-to)]]
-        [:div {:class "row mt-5"}
-          [:div {:class "col-md-5"}
-            [:div {:class "jumbotron text-center"}
-              [:h1 @days]
-              [:p {:class "lead"} ((if (= 1 @days) inflect/singular inflect/plural) (second (@from tt/scales)))]]]
-          [:div {:class "col-md-2 align-self-center text-center"}
-            [:h1 "="]]
-          [:div {:class "col-md-5"}
-            [:div {:class "jumbotron text-center"}
-              [:h1 @converted]
-              [:p {:class "lead"} ((if (= 1 @converted) inflect/singular inflect/plural) (second (@to tt/scales)))]]]]])))
+(defn type-select 
+  [{:keys [sub event]}]
+  (let [val (deref (re-frame/subscribe [sub]))]
+    [select-box 
+      {:options u/keys-and-names 
+       :value val 
+       :event event}]))
 
+      
+(defn results-box [{:keys [type sub]}]
+  (let [type-val  (re-frame/subscribe [type])
+        value     (re-frame/subscribe [sub])
+        type-inf  (if (= 1 @value) inflect/singular inflect/plural)
+        type-name (-> (@type-val u/scales) second type-inf)]
+    [:div.col-md-5
+      [:div.jumbotron.text-center
+        [:h1 @value]
+        [:p.lead type-name]]]))
+
+
+(defn input-rows []
+  [:div 
+    [:div.row
+      [:div.col-12
+        [day-box]]]
+    [:div.row.mt-3.mb-5
+      [:div.col-md-5.text-center
+        [type-select
+          {:sub   :from} 
+          :event :set-from]]
+      [:div.col-md-2.align-self-center.text-center "to"]
+      [:div.col-md-5.text-center
+        [type-select
+          {:sub   :to
+           :event :set-to}]]]])
+
+
+(defn output-rows []
+  [:div.row.mt-5
+    [results-box 
+      {:type :from
+        :sub  :days}]
+    [:div.col-md-2.align-self-center.text-center
+      [:h1 "="]]
+    [results-box
+      {:type :to
+        :sub  :converted}]])
+
+
+(defn app
+  []
+  [:div.container-fluid
+    [input-rows]
+    [output-rows]])
+    

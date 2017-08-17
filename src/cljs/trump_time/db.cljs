@@ -2,5 +2,5 @@
 
 (def default-db
   {:from :day 
-   :to :mooch 
+   :to   :mooch 
    :days 20})

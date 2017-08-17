@@ -19,6 +19,5 @@
     (float (/ (* from n) to))))
 
 
-(defn keys-and-names
-  [scales]
-  (map vector (keys scales) (map (comp second second) scales)))
+(def keys-and-names
+  (map vector (keys scales) (map #(-> % second second) scales)))
