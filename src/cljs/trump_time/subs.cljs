@@ -43,4 +43,4 @@
           from-scale (:from-scale db)
           to         (:to db)
           to-scale   (:to-scale db)] 
-      (.toPrecision (tt/convert-scale days from from-scale to to-scale) 2))))
+      (.toPrecision (tt/convert-scale days from from-scale to to-scale) 3))))
