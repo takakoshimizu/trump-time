@@ -1,6 +1,8 @@
 (ns trump-time.db)
 
 (def default-db
-  {:from :spicer 
-   :to   :mooch 
-   :days 1})
+  {:from       :spicer 
+   :from-scale :deci
+   :to         :mooch 
+   :to-scale   :deca
+   :days       1})
