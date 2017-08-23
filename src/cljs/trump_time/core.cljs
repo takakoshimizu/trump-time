@@ -12,10 +12,12 @@
     (enable-console-print!)
     (println "dev mode")))
 
+
 (defn mount-root []
   (re-frame/clear-subscription-cache!)
   (reagent/render [views/app]
                   (.getElementById js/document "app")))
+
 
 (defn ^:export init []
   (re-frame/dispatch-sync [:initialize-db])
