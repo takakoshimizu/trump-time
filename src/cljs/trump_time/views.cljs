@@ -64,7 +64,7 @@
 (defn input-rows []
   [:div 
     [:div.row
-      [:div.col-5
+      [:div.col-md-5.col-sm-12
         [day-box]]]
     [:div.row.mt-3.mb-5
       [:div.col-md-5.text-center.row.ml-0
