@@ -1,4 +1,5 @@
-(ns trump-time.utils)
+(ns trump-time.utils
+  (:require [inflections.core :as inflect]))
 
 
 (def scales
@@ -10,9 +11,9 @@
    :priebus [182    "priebus"]
    :bannon  [210.5  "bannon"]
    :comey   [109    "comey"]
-   :manuf   [26.87  "manufacturing council shutdown"]
-   :nazi    [2      "nazi condemnation turnaround"]
-   :nazi2   [1.2    "nazi condemnation turnaround-turnaround"]})
+   :manuf   [26.87  "manufacturing council shutdown" "councildown"]
+   :nazi    [2      "nazi condemnation turnaround" "naziround"]
+   :nazi2   [1.2    "nazi condemnation turnaround-turnaround" "naziroundaround"]})
 
 
 (def multipliers
@@ -34,6 +35,9 @@
 
 
 (defn convert-scale 
+  "Converts n units of from-scale to units of to-scale,
+  along with metric multipliers specified in from-mult
+  and to-mult."
   [n from-scale from-mult to-scale to-mult]
   (let [from-mult (first (from-mult multipliers))
         from      (first (from-scale scales))
@@ -46,5 +50,28 @@
   (let [sorted-keys (-> scales keys sort)]
     (map vector sorted-keys (map #(-> scales % second) sorted-keys))))
 
+
 (def multiplier-pairs
   (map vector multiplier-order (map #(-> multipliers % second) multiplier-order))) 
+
+
+(defn get-unit-name [unit-def]
+  "Gets the short unit name for the keyword unit-def
+  existing in the scales map."
+  (let [scale (unit-def scales)]
+    (if (-> scale count (= 3))
+      (nth scale 2)
+      (second scale))))
+
+
+(defn with-prefix [unit prefix]
+  "Applies the appropriate metric prefix to the unit,
+  where prefix is a keyword to a multiplier map item."
+  (let [pfx (-> multipliers prefix second)]
+    (str pfx unit)))
+
+
+(defn pluralize [unit n]
+  "Pluralizes the unit if n is not equal to 1."
+  (let [mode (if (= 1 n) inflect/singular inflect/plural)]
+    (mode unit)))
