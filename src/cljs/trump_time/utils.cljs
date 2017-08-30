@@ -34,15 +34,18 @@
   [:nano :micro :milli :centi :deci :one :deca :hecto :kilo :mega :giga])
 
 
+(declare get-unit)
+
+
 (defn convert-scale 
   "Converts n units of from-scale to units of to-scale,
   along with metric multipliers specified in from-mult
   and to-mult."
   [n from-scale from-mult to-scale to-mult]
-  (let [from-mult (first (from-mult multipliers))
-        from      (first (from-scale scales))
-        to-mult   (first (to-mult multipliers))
-        to        (first (to-scale scales))]
+  (let [from-mult (get-unit from-mult multipliers)
+        from      (get-unit from-scale scales)
+        to-mult   (get-unit to-mult multipliers)
+        to        (get-unit to-scale scales)]
     (float (/ (* from-mult from n) to to-mult))))
 
 
@@ -55,23 +58,38 @@
   (map vector multiplier-order (map #(-> multipliers % second) multiplier-order))) 
 
 
-(defn get-unit-name [unit-def]
+(defn get-unit-def
+  "Gets the unit record for the unit key."
+  [unit-key unit-col]
+  (unit-key unit-col))
+
+
+(defn get-unit 
+  "Returns the unit value for the provided unit key."
+  [unit-key unit-col]
+  (first (get-unit-def unit-key unit-col)))
+
+
+(defn get-unit-name 
   "Gets the short unit name for the keyword unit-def
   existing in the scales map."
+  [unit-def]
   (let [scale (unit-def scales)]
     (if (-> scale count (= 3))
       (nth scale 2)
       (second scale))))
 
 
-(defn with-prefix [unit prefix]
+(defn with-prefix 
   "Applies the appropriate metric prefix to the unit,
   where prefix is a keyword to a multiplier map item."
+  [unit prefix]
   (let [pfx (-> multipliers prefix second)]
     (str pfx unit)))
 
 
-(defn pluralize [unit n]
+(defn pluralize 
   "Pluralizes the unit if n is not equal to 1."
+  [unit n]
   (let [mode (if (= 1 n) inflect/singular inflect/plural)]
     (mode unit)))
