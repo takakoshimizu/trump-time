@@ -48,13 +48,13 @@
 
       
 (defn results-box [{:keys [type sub sub-scale]}]
-  (let [type-val  (re-frame/subscribe [type])
-        value     (re-frame/subscribe [sub])
-        scale     (re-frame/subscribe [sub-scale])
-        type-inf  (if (= 1 @value) inflect/singular inflect/plural)
-        type-name (-> (@type-val u/scales) second type-inf)
-        pfix-name (-> @scale u/multipliers second)
-        all-name  (str pfix-name type-name)]
+  (let [type-val   (re-frame/subscribe [type])
+        value      (re-frame/subscribe [sub])
+        scale      (re-frame/subscribe [sub-scale])
+        all-name   (-> @type-val 
+                       u/get-unit-name 
+                       (u/with-prefix @scale) 
+                       (u/pluralize @value))]
     [:div.col-md-5
       [:div.jumbotron.text-center
         [:h1 @value]
