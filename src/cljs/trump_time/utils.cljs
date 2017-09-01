@@ -1,5 +1,7 @@
 (ns trump-time.utils
-  (:require [inflections.core :as inflect]))
+  (:require [inflections.core :as inflect]
+            [clojure.string :as string]
+            [clojure.walk :as cw]))
 
 
 (def scales
@@ -93,3 +95,37 @@
   [unit n]
   (let [mode (if (= 1 n) inflect/singular inflect/plural)]
     (mode unit)))
+
+
+(defn as-kw
+  [x]
+  (if (.isNaN js/window x)
+    (keyword x)
+    x))
+
+
+(defn get-query-map
+  "Returns the URL query string as a map"
+  []
+  (let [qs
+          (->
+            js/window
+            .-location
+            .-search
+            (subs 1)
+            (string/split #"&"))]
+    (if (->> qs (apply str) string/blank?)
+      {}
+      (->> 
+        qs
+        (map #(string/split % #"=")) 
+        (map (fn [[k v]] [k (as-kw v)]))
+        (into {}) 
+        (cw/keywordize-keys)))))
+
+
+(defn to-query-string
+  "Converts a query map to a query string."
+  [qmap]
+  (let [as-keys (map (fn [[k v]] (str (name k) "=" (if (number? v) (-> v str name) (name v)))) qmap)]
+    (str "?" (string/join "&" as-keys))))
