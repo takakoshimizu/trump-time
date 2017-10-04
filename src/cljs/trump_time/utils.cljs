@@ -13,9 +13,11 @@
    :priebus [182    "priebus"]
    :bannon  [210.5  "bannon"]
    :comey   [109    "comey"]
+   :price   [253    "price"]
    :manuf   [26.87  "manufacturing council shutdown" "councildown"]
    :nazi    [2      "nazi condemnation turnaround" "naziround"]
-   :nazi2   [1.2    "nazi condemnation turnaround-turnaround" "naziroundaround"]})
+   :nazi2   [1.2    "nazi condemnation turnaround-turnaround" "naziroundaround"]
+   :flake   [278    "flake grows a pair" "flakepair"]})
 
 
 (def multipliers
