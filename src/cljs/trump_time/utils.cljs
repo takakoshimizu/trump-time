@@ -15,7 +15,7 @@
    :comey   [109    "comey"]
    :price   [253    "price"]
    :tiller  [405    "tillerson"]
-   :mcmaster[388    "mcmaster"]
+   :mmaster [388    "mcmaster"]
    :manuf   [26.87  "manufacturing council shutdown" "councildown"]
    :nazi    [2      "nazi condemnation turnaround" "naziround"]
    :nazi2   [1.2    "nazi condemnation turnaround-turnaround" "naziroundaround"]
